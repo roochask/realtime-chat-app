@@ -1,0 +1,25 @@
+{
+  "name": "@repo/backend-common",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "start": "bun ./dist/index.js",
+    "dev": "bun ./src/index.ts"
+  },
+  "exports": {
+    "./env": "./src/index.ts"
+  },
+  "dependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/dotenv": "^8.2.3",
+    "dotenv": "^17.2.1",
+    "path": "^0.12.7"
+  }
+}

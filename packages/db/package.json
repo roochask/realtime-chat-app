@@ -1,0 +1,22 @@
+{
+  "name": "@repo/db",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "exports": {
+    "./client": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "start": "bun ./dist/index.js",
+    "dev": "bun run build && bun run start"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@repo/typescript-config": "workspace:*"
+  }
+}
