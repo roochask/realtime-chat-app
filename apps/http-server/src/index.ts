@@ -180,4 +180,19 @@ app.get("/room/:slug", async (req, res) => {
     }
 })
 
+app.get("/rooms", authMiddleware, async (req, res) => {
+    const userId = req.userId;
+
+    const rooms = await client.user.findUnique({
+        where: {
+            id: userId
+        },
+        select: {
+            rooms: true
+        }
+    })
+
+    res.json(rooms)
+})
+
 app.listen(3002);

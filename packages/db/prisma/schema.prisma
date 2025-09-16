@@ -15,21 +15,23 @@ datasource db {
 }
 
 model User {
-  id          String   @default(uuid()) @id
-  email       String   @unique
-  password    String
-  name        String
-  photo       String?
-  rooms       Room[]
-  chats       Chat[]
+  id            String   @default(uuid()) @id
+  email         String   @unique
+  password      String
+  name          String
+  photo         String?
+  rooms         Room[]   // rooms created/administarted by this user
+  chats         Chat[]
+  memberships   RoomMember[] // rooms that user belongs to
 }
 
 model Room {
   id          Int @default(autoincrement()) @id
   slug        String   @unique
   adminId     String
-  users       User   @relation(fields: [adminId], references: [id])
+  admin       User   @relation(fields: [adminId], references: [id])
   chats       Chat[]  
+  members     RoomMember[] // all users in the room
   createdAt   DateTime  @default(now())
 }
 
@@ -40,4 +42,19 @@ model Chat {
   room        Room @relation(fields: [roomId], references: [id])
   userId      String
   user        User  @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+}
+
+model RoomMember {
+  id            Int    @id  @default(autoincrement())
+  userId        String
+  roomId        Int
+
+  user          User    @relation(fields: [userId], references: [id])
+  room          Room    @relation(fields: [roomId], references: [id])
+
+  role          String  @default("member") 
+  joinedAt      DateTime  @default(now())
+
+  @@unique([userId, roomId]) // prevent duplicate memberships
 }
